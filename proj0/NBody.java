@@ -13,10 +13,10 @@ public class NBody {
     /** return an array of the bodys in path.txt */
     public static Planet[] readPlanets(String path) {
         In in = new In(path);
-        int num_of_planets = in.readInt();
+        int num_of_planets = in.readInt(); 
         double radius = in.readDouble();
         Planet[] allBodies = new Planet[num_of_planets]; // need to use new to init!
-        for (int i = 0; i < num_of_planets; i++) {
+        for (int i = 0; i < num_of_planets; i++) { // use num_of_planets to fit all kinds of inputs
             double xP = in.readDouble();
             double yP = in.readDouble();
             double xV = in.readDouble();
@@ -37,8 +37,8 @@ public class NBody {
         Planet[] allBodies = readPlanets(filename);
 
         for (double t = 0; t <= T; t = t + dt) {
-            double[] xForces = new double[5];
-            double[] yForces = new double[5];
+            double[] xForces = new double[allBodies.length]; // use this to fit all kinds of inputs!
+            double[] yForces = new double[allBodies.length];
             int i = 0;
             for (Planet b : allBodies) {
                 xForces[i] = b.calcNetForceExertedByX(allBodies);
