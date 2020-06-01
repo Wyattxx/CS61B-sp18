@@ -16,7 +16,7 @@ public class NBody {
         int num_of_planets = in.readInt();
         double radius = in.readDouble();
         Planet[] allBodies = new Planet[5]; // need to use new to init!
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < num_of_planets; i++) {
             double xP = in.readDouble();
             double yP = in.readDouble();
             double xV = in.readDouble();
@@ -70,7 +70,7 @@ public class NBody {
         StdOut.printf("%.2e\n", radius);
         for (int i = 0; i < allBodies.length; i++) {
             StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n", allBodies[i].xxPos, allBodies[i].yyPos,
-            allBodies[i].xxVel, allBodies[i].yyVel, allBodies[i].mass, allBodies[i].imgFileName);
+                    allBodies[i].xxVel, allBodies[i].yyVel, allBodies[i].mass, allBodies[i].imgFileName);
         }
 
     }
