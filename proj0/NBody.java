@@ -15,7 +15,7 @@ public class NBody {
         In in = new In(path);
         int num_of_planets = in.readInt();
         double radius = in.readDouble();
-        Planet[] allBodies = new Planet[5]; // need to use new to init!
+        Planet[] allBodies = new Planet[num_of_planets]; // need to use new to init!
         for (int i = 0; i < num_of_planets; i++) {
             double xP = in.readDouble();
             double yP = in.readDouble();
