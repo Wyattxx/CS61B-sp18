@@ -33,12 +33,17 @@ public class IntList {
 		}
 		return rest.get(i - 1);
 	}
+	public IntList addfirst(int x) {
+		IntList X = new IntList(x, this);
+		return X;
+	}
 
 	public static void main(String[] args) {
 		IntList L = new IntList(15, null);
 		L = new IntList(10, L);
 		L = new IntList(5, L);
+		L = L.addfirst(2);
 
-		System.out.println(L.get(100));
+		System.out.println(L.get(0));
 	}
 } 

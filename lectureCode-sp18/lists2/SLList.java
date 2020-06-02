@@ -8,7 +8,7 @@ public class SLList {
 		public IntNode(int i, IntNode n) {
 			item = i;
 			next = n;
-			System.out.println(size);
+			//System.out.println(size);
 		}
 	} 
 
