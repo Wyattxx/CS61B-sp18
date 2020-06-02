@@ -1,5 +1,4 @@
 public class NBody {
-
     /**
      * read radius learn to use In class
      */
@@ -54,8 +53,10 @@ public class NBody {
             /** draw the background: universe */
             String imageToDraw = "images/starfield.jpg";
             StdDraw.enableDoubleBuffering();
-            /** Sets up the size of our universe hhh */
-            StdDraw.setScale(-4.2790e+11, 4.2790e+11);
+            /** Sets up the size of our universe hhh
+             * 
+             */
+            StdDraw.setScale(-radius*1.2, radius*1.2);
             StdDraw.clear();
             StdDraw.picture(0, 0, imageToDraw);
             /** draw many planets */
