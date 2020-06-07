@@ -82,20 +82,52 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B;
+        }
+        IntList P = A;
+        while (P.rest != null) {
+            P = P.rest;
+        }
+        P.rest = B;
+        return A;
+
     }
 
+    /**
+     * return a copy of A, non-destructive, write by wyatt
+     */
+    public static IntList copy(IntList A) {
+        if (A == null) {
+            return null;
+        }
+        return new IntList(A.first, copy(A.rest));
+    }
     /**
      * Returns a list consisting of the elements of A followed by the
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B;
+        }
+        return dcatenate(copy(A), B);
+
+
     }
 
-
-
+    /**
+    public static void main(String[] args) {
+        IntList xx = new IntList(10, new IntList(20, null));
+        IntList yy = new IntList(15, new IntList(25, null));
+        //IntList xxx = squareListRecursive(xx);
+        IntList zz = catenate(xx, yy);
+        System.out.println(xx);
+        System.out.println(yy);
+        System.out.println(zz);
+    }
+    */
 
 
 
