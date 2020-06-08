@@ -70,7 +70,7 @@ public class LinkedListDequeTest {
 
 		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+		LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
 		// should be empty 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
 
@@ -85,6 +85,8 @@ public class LinkedListDequeTest {
 		printTestStatus(passed);
 
 	}
+
+
 
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
@@ -112,9 +114,9 @@ public class LinkedListDequeTest {
 		System.out.println(first.getRecursive(1));
 		System.out.println(first.getRecursive(2));
 		System.out.println(first.get(3));
-
-
-
-
+		LinkedListDeque second = new LinkedListDeque(first);
+		second.addFirst(1111);
+		second.removeLast();
+		second.printDeque();
 	}
 } 
