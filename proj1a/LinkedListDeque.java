@@ -102,6 +102,7 @@ public class LinkedListDeque<T> {
     /**
      * same as get, but uses recursion
      * first, we need a private helper method
+     * github
      */
     private T getRecursive(int index, StuffNode curr_sentinel) {
         if (index >= size) {
@@ -116,7 +117,6 @@ public class LinkedListDeque<T> {
     public T getRecursive(int index) {
         return getRecursive(index, sentinel);
     }
-
 
 //    public T getRecursive(int index) {
 //        if (index >= size) {
