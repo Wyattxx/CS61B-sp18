@@ -130,6 +130,16 @@ public class LinkedListDeque<T> {
 //        return getRecursive(index - 1);
 //    }
 
+    public LinkedListDeque(LinkedListDeque other) {
+        sentinel = new StuffNode(null, (T) "63", null); //我觉得需要一个cast
+        sentinel.next = sentinel;
+        sentinel.prev = sentinel;
+        for (int i = 0; i < other.size; i++) {
+            this.addLast((T) other.get(i));
+        }
+        size = other.size;
+    }
+
     /**
      * Prints the items in the deque from first to last,
      * separated by a space.
