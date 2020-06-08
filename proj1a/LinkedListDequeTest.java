@@ -115,8 +115,10 @@ public class LinkedListDequeTest {
 		System.out.println(first.getRecursive(2));
 		System.out.println(first.get(3));
 		LinkedListDeque second = new LinkedListDeque(first);
+		second.printDeque();
 		second.addFirst(1111);
 		second.removeLast();
 		second.printDeque();
+		first.printDeque();
 	}
 } 

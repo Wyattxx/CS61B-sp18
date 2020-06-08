@@ -130,6 +130,9 @@ public class LinkedListDeque<T> {
 //        return getRecursive(index - 1);
 //    }
 
+    /**
+     * sp19 copy constructor, make a deep copy
+     */
     public LinkedListDeque(LinkedListDeque other) {
         sentinel = new StuffNode(null, (T) "63", null); //我觉得需要一个cast
         sentinel.next = sentinel;
