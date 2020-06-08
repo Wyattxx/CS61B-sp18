@@ -1,14 +1,16 @@
 /**
  * deque 2020.0618
- *
  */
 public class LinkedListDeque<T> {
 
-    /** linked list based deque */
+    /**
+     * linked list based deque
+     */
     private class StuffNode {
         public T item;
         public StuffNode next;
         public StuffNode prev;
+
         public StuffNode(StuffNode pre, T i, StuffNode nex) {
             prev = pre;
             item = i;
@@ -19,7 +21,9 @@ public class LinkedListDeque<T> {
     private int size;
     private StuffNode sentinel;
 
-    /** create an empty DLList*/
+    /**
+     * create an empty DLList
+     */
     public LinkedListDeque() {
         sentinel = new StuffNode(null, (T) "63", null); //我觉得需要一个cast
         sentinel.next = sentinel;
@@ -27,15 +31,30 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-    /** create a DLList*/
-    public LinkedListDeque(T x) {
-        sentinel = new StuffNode(null, (T) "63", null);
-        sentinel.next = new StuffNode(sentinel, x, sentinel);
-        sentinel.prev = sentinel.next;
-        size = 1;
-    }
+    //    /** comment to use autograder 18
+    //     * sp19 copy constructor, make a deep copy
+    //     */
+    //    public LinkedListDeque(LinkedListDeque other) {
+    //        sentinel = new StuffNode(null, (T) "63", null); //我觉得需要一个cast
+    //        sentinel.next = sentinel;
+    //        sentinel.prev = sentinel;
+    //        for (int i = 0; i < other.size; i++) {
+    //            this.addLast((T) other.get(i));
+    //        }
+    //        size = other.size;
+    //    }
+    //
+    //    /** create a DLList*/
+    //    public LinkedListDeque(T x) {
+    //        sentinel = new StuffNode(null, (T) "63", null);
+    //        sentinel.next = new StuffNode(sentinel, x, sentinel);
+    //        sentinel.prev = sentinel.next;
+    //        size = 1;
+    //    }
 
-    /** add item to the front of the list */
+    /**
+     * add item to the front of the list
+     */
     public void addFirst(T item) {
         sentinel.next = new StuffNode(sentinel, item, sentinel.next);
         sentinel.next.next.prev = sentinel.next;//更新原来的first的prev!
@@ -45,7 +64,9 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
-    /** add item to the end of the list */
+    /**
+     * add item to the end of the list
+     */
     public void addLast(T item) {
         sentinel.prev = new StuffNode(sentinel.prev, item, sentinel);
         sentinel.prev.prev.next = sentinel.prev; //更新原来的end的next!
@@ -63,7 +84,7 @@ public class LinkedListDeque<T> {
         T value = sentinel.next.item;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
-        size -=1;
+        size -= 1;
         return value;
     }
 
@@ -78,7 +99,7 @@ public class LinkedListDeque<T> {
         T value = sentinel.prev.item;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
-        size -=1;
+        size -= 1;
         return value;
     }
 
@@ -111,37 +132,25 @@ public class LinkedListDeque<T> {
         if (index == 0) {
             return curr_sentinel.next.item;
         }
-        return getRecursive(index-1, curr_sentinel.next);
+        return getRecursive(index - 1, curr_sentinel.next);
     }
 
     public T getRecursive(int index) {
         return getRecursive(index, sentinel);
     }
 
-//    public T getRecursive(int index) {
-//        if (index >= size) {
-//            return null;
-//        }
-//        StuffNode p = sentinel;
-//        if (index == 0) {
-//            return p.next.item;
-//        }
-//        this.removeFirst(); //destructive
-//        return getRecursive(index - 1);
-//    }
+    //    public T getRecursive(int index) {
+    //        if (index >= size) {
+    //            return null;
+    //        }
+    //        StuffNode p = sentinel;
+    //        if (index == 0) {
+    //            return p.next.item;
+    //        }
+    //        this.removeFirst(); //destructive
+    //        return getRecursive(index - 1);
+    //    }
 
-    /**
-     * sp19 copy constructor, make a deep copy
-     */
-    public LinkedListDeque(LinkedListDeque other) {
-        sentinel = new StuffNode(null, (T) "63", null); //我觉得需要一个cast
-        sentinel.next = sentinel;
-        sentinel.prev = sentinel;
-        for (int i = 0; i < other.size; i++) {
-            this.addLast((T) other.get(i));
-        }
-        size = other.size;
-    }
 
     /**
      * Prints the items in the deque from first to last,
@@ -155,7 +164,9 @@ public class LinkedListDeque<T> {
         }
     }
 
-    /** return true if the list is empty */
+    /**
+     * return true if the list is empty
+     */
     public boolean isEmpty() {
         if (size == 0) {
             return true;
@@ -163,7 +174,9 @@ public class LinkedListDeque<T> {
         return false;
     }
 
-    /** return the size of the list */
+    /**
+     * return the size of the list
+     */
     public int size() {
         return size;
     }
