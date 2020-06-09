@@ -4,13 +4,13 @@
  * the first item is always at items[nextFirst + 1]
  * the last item is always at items[nextLast - 1]
  */
-public class ArrayDeque_ver0<T> {
+public class ArrayDequeVer0<T> {
     private T[] items;
     private int size;
     private int nextFirst;
     private int nextLast;
 
-    public ArrayDeque_ver0() {
+    public ArrayDequeVer0() {
         items = (T[]) new Object[8];
         size = 0;
         nextFirst = 0;
