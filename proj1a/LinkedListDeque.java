@@ -1,5 +1,5 @@
 /**
- * deque 2020.0618
+ * @author Wyatt
  */
 public class LinkedListDeque<T> {
 
