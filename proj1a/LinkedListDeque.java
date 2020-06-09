@@ -57,7 +57,7 @@ public class LinkedListDeque<T> {
      */
     public void addFirst(T item) {
         sentinel.next = new StuffNode(sentinel, item, sentinel.next);
-        sentinel.next.next.prev = sentinel.next;//更新原来的first的prev!
+        sentinel.next.next.prev = sentinel.next; //更新原来的first的prev!
         //也可以这样写
         //sentinel.next.prev = new StuffNode(sentinel, item, sentinel.next);
         //sentinel.next = sentinel.next.prev;
@@ -125,14 +125,14 @@ public class LinkedListDeque<T> {
      * first, we need a private helper method
      * github
      */
-    private T getRecursive(int index, StuffNode curr_sentinel) {
+    private T getRecursive(int index, StuffNode currentsentinel) {
         if (index >= size) {
             return null;
         }
         if (index == 0) {
-            return curr_sentinel.next.item;
+            return currentsentinel.next.item;
         }
-        return getRecursive(index - 1, curr_sentinel.next);
+        return getRecursive(index - 1, currentsentinel.next);
     }
 
     public T getRecursive(int index) {
