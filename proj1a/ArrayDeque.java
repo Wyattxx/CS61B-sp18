@@ -11,68 +11,71 @@ public class ArrayDeque<T> {
     private int nextLast;
 
     public ArrayDeque() {
-        items = (T[]) new Object[8];
+        items = (T[]) new Object[8]; //grammar request
         size = 0;
-        nextFirst = 0;
+        nextFirst = 0; //on the left of nextLast
         nextLast = 1;
     }
 
     /**
-     * resize the items array
+     * helper method:
+     * calculate the index after the given index circularly
+     */
+    private int plusOne(int index) {
+        return (index + 1) % items.length;
+    }
+
+    /**
+     * helper method:
+     * calculate the index before the given index circularly
+     */
+    private int minusOne(int index) {
+        return (index - 1 + items.length) % items.length; //
+    }
+
+    /**
+     * resize the oldItems array to length = capacity
+     * oldItems locate at the beginning of the newItems, following the index order
      */
     private void resize(int capacity) {
         T[] newItems = (T[]) new Object[capacity];
-        nextFirst += 1;
-        checkfirstlast();
+        int oldIndex = plusOne(nextFirst); //first item, oldIndex 0
         for (int i = 0; i < size; i++) {
-            newItems[i] = items[nextFirst];
-            nextFirst += 1;
-            checkfirstlast();
+            newItems[i] = items[oldIndex];
+            oldIndex = plusOne(oldIndex);
         }
         items = newItems;
         nextFirst = items.length - 1; //newItems stars from index 0
         nextLast = size;
     }
 
-    /**
-     * helper method:
-     * check nextFirst and nextLast, make sure their indexes are correct
-     */
-    private void checkfirstlast() {
-        if (nextFirst == -1) {
-            nextFirst = items.length - 1;
-        } else if (nextFirst == items.length) {
-            nextFirst = 0;
-        } else if (nextLast == -1) {
-            nextLast = items.length - 1;
-        } else if (nextLast == items.length) {
-            nextLast = 0;
-        }
-    }
-
-    /**
-     * Adds an item of type T to the front of the deque.
-     */
-    public void addFirst(T item) {
+    /** expand the array when it's full */
+    private void expandCheck() {
         if (size == items.length) {
             resize(size * 2);
         }
+    }
+
+    /** shrink the array when it's sparse */
+    private void shrinkCheck() {
+        if (items.length >= 16 && ((float) size / items.length) < 0.25) {
+            resize(items.length / 2); //should be the length of array, not size
+        }
+    }
+
+    /** Adds an item of type T to the front of the deque. */
+    public void addFirst(T item) {
+        expandCheck();
         items[nextFirst] = item;
-        nextFirst -= 1;
-        checkfirstlast();
+        nextFirst = minusOne(nextFirst);
         size += 1;
     }
 
-    /**
-     * Adds an item of type T to the back of the deque.
-     */
+    /** Adds an item of type T to the back of the deque. */
     public void addLast(T item) {
-        if (size == items.length) {
-            resize(size * 2); //0.25
-        }
+        expandCheck();
         items[nextLast] = item;
-        nextLast += 1;
-        checkfirstlast();
+        nextLast = plusOne(nextLast);
         size += 1;
     }
 
@@ -84,15 +87,12 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if (items.length >= 16 && ((float) size / items.length) < 0.25) {
-            resize(items.length / 2); //should be the length of array, not size
-        }
-        nextFirst += 1;
-        checkfirstlast();
-        T x = items[nextFirst];
-        items[nextFirst] = null;
+        nextFirst = plusOne(nextFirst);
+        T xtoRemove = items[nextFirst];
+        items[nextFirst] = null; //optional, loitering problem
         size -= 1;
-        return x;
+        shrinkCheck();
+        return xtoRemove;
     }
 
     /**
@@ -103,15 +103,12 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if (items.length >= 16 && ((float) size / items.length) < 0.25) {
-            resize(items.length / 2);
-        }
-        nextLast -= 1;
-        checkfirstlast();
-        T x = items[nextLast];
+        nextLast = minusOne(nextLast);
+        T xtoRemove = items[nextLast];
         items[nextLast] = null;
         size -= 1;
-        return x;
+        shrinkCheck();
+        return xtoRemove;
     }
 
     /**
@@ -123,41 +120,27 @@ public class ArrayDeque<T> {
         if (index >= size) {
             return null;
         }
-        int p = nextFirst + 1; //index of the first item
-        if (p == items.length) {
-            p = 0;
-        }
+        int p = plusOne(nextFirst); //index of the first item, don't modify nextFirst!
         return items[(p + index) % items.length];
     }
 
+    /** Prints the items in the deque from first to last, separated by a space */
+    public void printDeque() {
+        int p = plusOne(nextFirst);
+        for (int i = 0; i < size; i++) {
+            System.out.print(items[p] + " ");
+            p = plusOne(p);
+        }
+    }
 
-    /**
-     * Returns true if deque is empty, false otherwise..
-     */
+    /** Returns true if deque is empty, false otherwise.*/
     public boolean isEmpty() {
         return size == 0;
     }
 
-    /**
-     * Returns the number of items in the deque..
-     */
+    /** Returns the number of items in the deque.*/
     public int size() {
         return size;
     }
-
-    /**
-     * Prints the items in the deque from first to last, separated by a space
-     */
-    public void printDeque() {
-        int p = nextFirst;
-        for (int i = 0; i < size; i++) {
-            p += 1;
-            if (p == items.length) {
-                p = 0;
-            }
-            System.out.print(items[p] + " ");
-        }
-    }
-
 
 }
