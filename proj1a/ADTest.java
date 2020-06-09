@@ -1,5 +1,5 @@
 /**
- * Performs some basic linked list tests.
+ * Performs some basic array list tests.
  */
 public class ADTest {
 
@@ -18,9 +18,7 @@ public class ADTest {
         ad.removeFirst();
         ad.removeLast();
         int x = ad.get(4);
-
-
-
+        ad.printDeque();
 
     }
 }
