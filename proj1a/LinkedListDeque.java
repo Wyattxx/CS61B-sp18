@@ -7,9 +7,9 @@ public class LinkedListDeque<T> {
      * linked list based deque
      */
     private class StuffNode {
-        public T item;
-        public StuffNode next;
-        public StuffNode prev;
+        private T item;
+        private StuffNode next;
+        private StuffNode prev;
 
         public StuffNode(StuffNode pre, T i, StuffNode nex) {
             prev = pre;
