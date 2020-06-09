@@ -131,6 +131,7 @@ public class ArrayDeque<T> {
             System.out.print(items[p] + " ");
             p = plusOne(p);
         }
+        System.out.println();
     }
 
     /** Returns true if deque is empty, false otherwise.*/
