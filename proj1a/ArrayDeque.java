@@ -19,9 +19,10 @@ public class ArrayDeque<T> {
     /**
      * resize the items array
      */
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         T[] newItems = (T[]) new Object[capacity];
         nextFirst += 1;
+        checkfirstlast();
         for (int i = 0; i < size; i++) {
             newItems[i] = items[nextFirst];
             nextFirst += 1;
