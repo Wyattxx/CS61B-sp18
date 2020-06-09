@@ -1,4 +1,5 @@
 /**
+ * @author Wyatt
  * Invariants:
  * the first item is always at items[nextFirst + 1]
  * the last item is always at items[nextLast - 1]
@@ -49,7 +50,6 @@ public class ArrayDeque<T> {
         }
     }
 
-
     /**
      * Adds an item of type T to the front of the deque.
      */
@@ -85,7 +85,7 @@ public class ArrayDeque<T> {
             return null;
         }
         if (items.length >= 16 && ((float) size / items.length) < 0.25) {
-            resize(items.length / 2);
+            resize(items.length / 2); //should be the length of array, not size
         }
         nextFirst += 1;
         checkfirstlast();
@@ -123,12 +123,11 @@ public class ArrayDeque<T> {
         if (index >= size) {
             return null;
         }
-        nextFirst += 1;
-        checkfirstlast();
-        int p = nextFirst; //index of the first item
-        p = p + index; //index of the look up item
-        p = p % items.length; ///////
-        return items[p];
+        int p = nextFirst + 1; //index of the first item
+        if (p == items.length) {
+            p = 0;
+        }
+        return items[(p + index) % items.length];
     }
 
 
