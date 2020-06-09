@@ -85,7 +85,7 @@ public class ArrayDeque<T> {
             return null;
         }
         if (items.length >= 16 && ((float) size / items.length) < 0.25) {
-            resize(size/2);
+            resize(items.length / 2);
         }
         nextFirst += 1;
         checkfirstlast();
@@ -104,7 +104,7 @@ public class ArrayDeque<T> {
             return null;
         }
         if (items.length >= 16 && ((float) size / items.length) < 0.25) {
-            resize(size/2);
+            resize(items.length / 2);
         }
         nextLast -= 1;
         checkfirstlast();
@@ -123,9 +123,11 @@ public class ArrayDeque<T> {
         if (index >= size) {
             return null;
         }
-        int p = nextFirst + 1; //index of the first item
+        nextFirst += 1;
+        checkfirstlast();
+        int p = nextFirst; //index of the first item
         p = p + index; //index of the look up item
-        p = p % items.length;///////
+        p = p % items.length; ///////
         return items[p];
     }
 
