@@ -41,6 +41,19 @@ public class IntListTest {
      */
 
     @Test
+    public void testReverse() {
+        IntList L = IntList.of(1, 2, 3);
+        IntList L2 = IntList.of();
+        IntList reverse = IntList.reverse(L);
+        IntList reverse2 = IntList.reverse(L2);
+        assertEquals(IntList.of(3, 2, 1), reverse);
+        assertEquals(null, reverse2);
+        assertNotEquals(IntList.of(1, 2, 3), L);
+
+
+    }
+
+    @Test
     public void testSquareListRecursive() {
         IntList L = IntList.of(1, 2, 3);
         IntList res = IntList.squareListRecursive(L);
@@ -65,6 +78,8 @@ public class IntListTest {
         assertEquals(exp, IntList.catenate(A, B));
         assertEquals(IntList.of(1, 2, 3), A);
     }
+
+
 
     /** If you're running this from the command line, you'll need
       * to add a main method. See ArithmeticTest.java for an

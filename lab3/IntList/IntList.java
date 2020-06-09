@@ -11,11 +11,11 @@ public class IntList {
     /**
      * First element of list.
      */
-    public int first;
+    private int first;
     /**
      * Remaining elements of list.
      */
-    public IntList rest;
+    private IntList rest;
 
     /**
      * A List with first FIRST0 and rest REST0.
@@ -79,9 +79,7 @@ public class IntList {
      * Returns a list consisting of the elements of A followed by the
      * *  elements of B.  May modify items of A. Don't use 'new'.
      */
-
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
         if (A == null) {
             return B;
         }
@@ -91,46 +89,55 @@ public class IntList {
         }
         P.rest = B;
         return A;
-
     }
 
-    /**
-     * return a copy of A, non-destructive, write by wyatt
-     */
-    public static IntList copy(IntList A) {
+    /** return a copy of A, non-destructive, written by wyatt*/
+    private static IntList copy(IntList A) {
         if (A == null) {
             return null;
         }
         return new IntList(A.first, copy(A.rest));
     }
+
     /**
      * Returns a list consisting of the elements of A followed by the
-     * * elements of B.  May NOT modify items of A.  Use 'new'.
+     * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
         if (A == null) {
             return B;
         }
         return dcatenate(copy(A), B);
-
-
     }
 
     /**
-    public static void main(String[] args) {
-        IntList xx = new IntList(10, new IntList(20, null));
-        IntList yy = new IntList(15, new IntList(25, null));
-        //IntList xxx = squareListRecursive(xx);
-        IntList zz = catenate(xx, yy);
-        System.out.println(xx);
-        System.out.println(yy);
-        System.out.println(zz);
+     * Returns the reverse of the given IntList.
+     * This method is destructive. If given null
+     * as an input, returns null.
+     */
+    public static IntList reverse(IntList A) {
+        if (A == null) {
+            return null;
+        }
+//        IntList reversed, restOfList;
+//        for (reversed = null; A != null; A = restOfList) {
+//            restOfList = A.rest;
+//            A.rest = reversed;
+//            reversed = A;
+//        }
+//        return reversed;
+
+        IntList reversed = null;
+        IntList restOfList;
+        while (A != null) {
+            restOfList = A.rest;
+            A.rest = reversed;
+            reversed = A;
+            A = restOfList;
+        }
+        return reversed;
+
     }
-    */
-
-
-
 
 
 
