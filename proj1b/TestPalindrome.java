@@ -23,6 +23,9 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("anna"));
         assertFalse(palindrome.isPalindrome("wyatt"));
 
+
+        assertTrue(palindrome.isPalindrome("&~%", new OffByOne()));
+        assertTrue(palindrome.isPalindrome("bA", new OffByOne()));
         assertTrue(palindrome.isPalindrome("flake", new OffByOne()));
         assertFalse(palindrome.isPalindrome("wyatt", new OffByOne()));
 

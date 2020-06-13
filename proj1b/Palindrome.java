@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class Palindrome {
 
     /**
@@ -9,10 +7,11 @@ public class Palindrome {
      * should have ‘p’ at the front, followed by ‘e’, and so forth.
      * @param word
      */
-    public Deque<Character> wordToDeque(String word){
+    public Deque<Character> wordToDeque(String word) {
         Deque<Character> a = new LinkedListDeque<>();
-        for (int i = 0; i < word.length(); i++ ) {
-            a.addLast(word.charAt(i));
+        String word2 = word.toLowerCase(); //upper/lower character check
+        for (int i = 0; i < word2.length(); i++) {
+            a.addLast(word2.charAt(i));
         }
         return a;
     }

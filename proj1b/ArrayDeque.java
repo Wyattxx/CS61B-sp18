@@ -4,7 +4,7 @@
  * the first item is always at items[nextFirst + 1]
  * the last item is always at items[nextLast - 1]
  */
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T> {
     private T[] items;
     private int size;
     private int nextFirst;
