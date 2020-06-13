@@ -9,9 +9,9 @@ public class Palindrome {
      */
     public Deque<Character> wordToDeque(String word) {
         Deque<Character> a = new LinkedListDeque<>();
-        String word2 = word.toLowerCase(); //upper/lower character check
-        for (int i = 0; i < word2.length(); i++) {
-            a.addLast(word2.charAt(i));
+        //String word2 = word.toLowerCase(); //upper/lower character check
+        for (int i = 0; i < word.length(); i++) {
+            a.addLast(word.charAt(i));
         }
         return a;
     }
