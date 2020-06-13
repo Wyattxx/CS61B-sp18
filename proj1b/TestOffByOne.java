@@ -8,8 +8,12 @@ public class TestOffByOne {
     static CharacterComparator offByOne = new OffByOne();
 
     @Test
-    public void testOffByone() {
+    public void testOffByOne() {
         assertTrue(offByOne.equalChars('a', 'b'));
+        assertFalse(offByOne.equalChars('A', 'b'));
         assertFalse(offByOne.equalChars('a', 'c'));
+        assertFalse(offByOne.equalChars('！', '#'));
+        assertTrue(offByOne.equalChars('%', '&'));
+
     }
 }
