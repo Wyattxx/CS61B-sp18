@@ -44,37 +44,95 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      *  or null if this map contains no mapping for the key.
      */
     private V getHelper(K key, Node p) {
-        throw new UnsupportedOperationException();
+        if (p == null) {
+            return null;
+        }
+        int cmp = key.compareTo(p.key);
+        if (cmp < 0) {
+            return getHelper(key, p.left);
+        } else if (cmp > 0) {
+            return getHelper(key, p.right);
+        } else {
+            return p.value;
+        }
     }
+
 
     /** Returns the value to which the specified key is mapped, or null if this
      *  map contains no mapping for the key.
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        if (key == null) {
+            throw new IllegalArgumentException("calls get() with a null key");
+        }
+        return getHelper(key, root);
     }
 
     /** Returns a BSTMap rooted in p with (KEY, VALUE) added as a key-value mapping.
       * Or if p is null, it returns a one node BSTMap containing (KEY, VALUE).
      */
     private Node putHelper(K key, V value, Node p) {
-        throw new UnsupportedOperationException();
+        if (p == null) {
+            size += 1;
+            return new Node(key, value);
+        }
+        int cmp = key.compareTo(p.key);
+        if (cmp < 0) {
+            p.left = putHelper(key, value, p.left);
+        } else if (cmp > 0) {
+            p.right = putHelper(key, value, p.right);
+        } else {
+            p.value = value;
+        }
+        return p;
     }
+
+    private void putHelper2(K key, V value, Node p) {
+        //这里有问题，p是null，不返回node的话，这里指向新的node没用，p还是null，缺少一个sentinel
+        if (p == null) {
+            p = new Node(key, value);
+            return;
+        }
+        int cmp = key.compareTo(p.key);
+        if (cmp < 0) {
+            putHelper2(key, value, p.left);
+        } else if (cmp > 0){
+            putHelper2(key, value, p.right);
+        } else {
+            p.value = value;
+            return;
+        }
+    }
+
 
     /** Inserts the key KEY
      *  If it is already present, updates value to be VALUE.
      */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        if (key == null) {
+            throw new IllegalArgumentException("calls put() with a null key");
+        }
+        root = putHelper(key, value, root);
+
+
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
+
+    public static void main(String[] args) {
+        BSTMap<String, Integer> bstmap = new BSTMap<>();
+        bstmap.put("hello", 5);
+        bstmap.put("cat", 10);
+        bstmap.put("fish", 22);
+        bstmap.put("zebra", 90);
+    }
+
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
 
