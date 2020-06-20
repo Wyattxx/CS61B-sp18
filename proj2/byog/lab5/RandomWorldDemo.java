@@ -38,7 +38,7 @@ public class RandomWorldDemo {
         int tileNum = RANDOM.nextInt(3);
         switch (tileNum) {
             case 0: return Tileset.WALL;
-            case 1: return Tileset.FLOWER;
+            case 1: return Tileset.PLAYER;
             case 2: return Tileset.NOTHING;
             default: return Tileset.NOTHING;
         }

@@ -7,7 +7,7 @@ import byog.TileEngine.Tileset;
 /**
  * Draws a world consisting of hexagonal regions.
  */
-public class HexWorld {
+public class HexWorldOld {
     private static final int WIDTH = 50;
     private static final int HEIGHT = 50;
 
