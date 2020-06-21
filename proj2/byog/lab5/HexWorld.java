@@ -11,6 +11,7 @@ import java.util.Random;
 public class HexWorld {
     private static final int WIDTH = 50;
     private static final int HEIGHT = 50;
+    private static Random rand = new Random(12345);
 
     /** position of the hexagon to add */
     private static class Position {
@@ -24,7 +25,6 @@ public class HexWorld {
 
     /** Pick a RANDOM tile */
     private static TETile randomTile() {
-        Random rand = new Random();
         int x = rand.nextInt(6);
         switch (x) {
             case 0 : return Tileset.WALL;
