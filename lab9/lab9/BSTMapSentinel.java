@@ -1,5 +1,7 @@
 package lab9;
 
+import com.sun.source.tree.WhileLoopTree;
+
 import java.util.Iterator;
 import java.util.Set;
 
@@ -8,7 +10,7 @@ import java.util.Set;
  *
  * @author Your name here
  */
-public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
+public class BSTMapSentinel<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private class Node {
         /* (K, V) pair stored in this Node. */
@@ -25,18 +27,18 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
     }
 
-    private Node root;  /* Root node of the tree. */
+    private Node sentinel;  /* Root node of the tree. */
     private int size; /* The number of key-value pairs in the tree */
 
     /* Creates an empty BSTMap. */
-    public BSTMap() {
+    public BSTMapSentinel() {
         this.clear();
     }
 
     /* Removes all of the mappings from this map. */
     @Override
     public void clear() {
-        root = null;
+        sentinel = new Node(null, null);
         size = 0;
     }
 
@@ -44,16 +46,16 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      *  or null if this map contains no mapping for the key.
      */
     private V getHelper(K key, Node p) {
-        if (p == null) {
+        if (p.right == null) {
             return null;
         }
-        int cmp = key.compareTo(p.key);
+        int cmp = key.compareTo(p.right.key);
         if (cmp < 0) {
-            return getHelper(key, p.left);
+            return getHelper(key, p.right.left);
         } else if (cmp > 0) {
-            return getHelper(key, p.right);
+            return getHelper(key, p.right.right);
         } else {
-            return p.value;
+            return p.right.value;
         }
     }
 
@@ -66,7 +68,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (key == null) {
             throw new IllegalArgumentException("calls get() with a null key");
         }
-        return getHelper(key, root);
+        return getHelper(key, sentinel);
     }
 
     /** Returns a BSTMap rooted in p with (KEY, VALUE) added as a key-value mapping.
@@ -77,7 +79,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             size += 1;
             return new Node(key, value);
         }
-        int cmp = key.compareTo(p.key);
+        int cmp = key.compareTo(p.right.key);
         if (cmp < 0) {
             p.left = putHelper(key, value, p.left);
         } else if (cmp > 0) {
@@ -88,23 +90,33 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return p;
     }
 
-    private void putHelper2(K key, V value, Node p) {
+    private void putHelper2(K key, V value, Node sentinel) {
         //这里有问题，p是null，不返回node的话，这里指向新的node没用，p还是null，缺少一个sentinel
-        if (p == null) {
-            p.key = key;
-            p.value = value;
+        Node p = sentinel;
+        if (p.right == null) {
+            p.right = new Node(key, value);
             return;
         }
-        int cmp = key.compareTo(p.key);
+        int cmp = key.compareTo(p.right.key);
         if (cmp < 0) {
-            putHelper2(key, value, p.left);
+            if (p.right.left == null) {
+                p.right.left = new Node(key, value);
+                return;
+            }
+            putHelper2(key, value, p.right.left);
         } else if (cmp > 0){
-            putHelper2(key, value, p.right);
+            if (p.right.right == null) {
+                p.right.right = new Node(key, value);
+                return;
+            }
+            putHelper2(key, value, p.right.right);
         } else {
-            p.value = value;
+            p.right.value = value;
             return;
         }
     }
+
+
 
 
     /** Inserts the key KEY
@@ -115,8 +127,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (key == null) {
             throw new IllegalArgumentException("calls put() with a null key");
         }
-        //root = putHelper(key, value, root);
-        putHelper2(key, value, root);
+        putHelper2(key, value, sentinel);
 
 
     }
@@ -128,7 +139,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     public static void main(String[] args) {
-        BSTMap<String, Integer> bstmap = new BSTMap<>();
+        BSTMapSentinel<String, Integer> bstmap = new BSTMapSentinel<>();
         bstmap.put("hello", 5);
         bstmap.put("cat", 10);
         bstmap.put("fish", 22);
