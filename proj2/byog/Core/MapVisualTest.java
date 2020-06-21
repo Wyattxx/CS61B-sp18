@@ -23,13 +23,7 @@ public class MapVisualTest {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
-        // initialize tiles
         TETile[][] world = new TETile[WIDTH][HEIGHT];
-        for (int x = 0; x < WIDTH; x += 1) {
-            for (int y = 0; y < HEIGHT; y += 1) {
-                world[x][y] = Tileset.WALL;
-            }
-        }
 
         // generate the random world
         MapGenerator.createWorld(world, RANDOM);

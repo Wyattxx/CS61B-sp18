@@ -1,6 +1,7 @@
 package lab9;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,6 +24,11 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     public MyHashMap() {
         buckets = new ArrayMap[DEFAULT_SIZE];
+        this.clear();
+    }
+
+    public MyHashMap(int size) {
+        buckets = new ArrayMap[size];
         this.clear();
     }
 
@@ -53,19 +59,42 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        int index = this.hash(key);
+        return buckets[index].get(key);
+    }
+
+    /* resize the hash table when loadFactor > max_LF */
+    private void resize(int capacity) {
+        MyHashMap<K, V> temp = new MyHashMap<>(capacity);
+        for (ArrayMap<K, V> s: this.buckets) {
+            for (K key: s.keySet()) {
+                temp.put(key, s.get(key));
+            }
+        }
+        //this.size = temp.size; //should be the same
+        this.buckets = temp.buckets;
     }
 
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        int index = this.hash(key);
+        if (buckets[index].containsKey(key)) {
+            buckets[index].put(key, value);
+        } else {
+            buckets[index].put(key, value);
+            size += 1;
+        }
+        if (this.loadFactor() > MAX_LF) {
+            resize(buckets.length * 2);
+        }
+
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
