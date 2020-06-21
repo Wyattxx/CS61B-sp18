@@ -1,7 +1,7 @@
 package byog.Core;
 
 import byog.TileEngine.*;
-
+import edu.princeton.cs.algs4.Transaction;
 import javax.imageio.plugins.tiff.TIFFTagSet;
 import javax.print.attribute.standard.ReferenceUriSchemesSupported;
 import java.util.Random;
@@ -18,29 +18,43 @@ public class MapGenerator {
         worldInitialize(world);
 
         Room randomRoom = new Room(random);
-        for (int i = 0; i < 5; i++) {
+        while (checkRoom(world, randomRoom)) {
             addRoom(world, randomRoom);
-            randomRoom = nextRoom(randomRoom, random);
+            randomRoom = nextRoom(world, randomRoom, random);
         }
-
         outsideWall(world);
         return world;
     }
 
-    /** calculate the next room that is next to the current room */
-    private static Room nextRoom(Room room, Random random) {
-        int nowPosX = room.position.x;
-        int nowPosY = room.position.y;
-        int newPosX = RandomUtils.uniform(random, nowPosX - 1, nowPosX + room.width);
-        int newPosY = RandomUtils.uniform(random, nowPosY - 1, nowPosY + room.height);
-        newPosX = nowPosX + room.width;
-        newPosY = nowPosY + room.height - 1;
+    /** calculate the random positioned next room that is next to the current room */
+    private static Room nextRoom(TETile[][] world, Room room, Random random) {
+        Position leftBottom = room.position;
+        int width = RandomUtils.uniform(random, 1, 11);
+        int height = RandomUtils.uniform(random, 1, 11);
 
+        int newPosX = RandomUtils.uniform(random, leftBottom.x, leftBottom.x + room.width);
+        int newPosY = RandomUtils.uniform(random, leftBottom.y, leftBottom.y + room.height);
         Position newPos = new Position(newPosX, newPosY);
-        int width = RandomUtils.uniform(random, 1, 10);
-        int height = RandomUtils.uniform(random, 1, 10);
+
         return new Room(newPos, width, height);
     }
+
+    /** return true if the room is within the world, check two diagonal vertices */
+    private static boolean checkRoom(TETile[][] world, Room room) {
+        Position leftBottom = room.position;
+        Position rightTop = new Position(leftBottom.x + room.width - 1, leftBottom.y + room.height - 1);
+        Position leftBottomPlus = new Position(leftBottom.x - 1, leftBottom.y - 1); // room has wall, wall must be within the world
+        Position rightTopPlus = new Position(rightTop.x + 1, rightTop.y + 1); // room has wall, wall must be within the world
+        return checkPos(world, leftBottomPlus) && checkPos(world, rightTopPlus);
+    }
+
+    /** return true if the position is within the world */
+    private static boolean checkPos(TETile[][] world, Position position) {
+        int x = position.x;
+        int y = position.y;
+        return x >= 0 && x <= world.length - 1 && y >= 0 && y <= world[0].length - 1;
+    }
+
 
     /** add a rectangular room to the world */
     private static void addRoom(TETile[][] world, Room room) {
@@ -65,9 +79,12 @@ public class MapGenerator {
         if (!world[x][y].equals(Tileset.WALL)) {
             return false;
         }
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (world[x - 1 + i][y - 1 + j].equals(Tileset.FLOOR)) {
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                if (i < 0 || j < 0 || i > world.length -1 || j > world[0].length - 1) {
+                    continue;
+                }
+                if (world[i][j].equals(Tileset.FLOOR)) {
                     return false;
                 }
             }
@@ -77,15 +94,14 @@ public class MapGenerator {
 
     /** make tiles outside the wall be nothing */
     private static void outsideWall(TETile[][] world) {
-        for (int x = 1; x < world.length-1; x += 1) {
-            for (int y = 1; y < world[0].length-1; y += 1) {
+        for (int x = 0; x < world.length; x += 1) {
+            for (int y = 0; y < world[0].length; y += 1) {
                 if (checkTile(world, x, y)) {
                     world[x][y] = Tileset.NOTHING;
                 }
             }
         }
     }
-
 
 }
 

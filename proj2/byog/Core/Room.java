@@ -16,6 +16,7 @@ public class Room {
 
     public Room(Random random) {
         position = new Position(random.nextInt(10), random.nextInt(10)); //first room pos
+        position = new Position(1, 1);
         width = RandomUtils.uniform(random, 1, 10);
         height = RandomUtils.uniform(random, 1, 10);
     }

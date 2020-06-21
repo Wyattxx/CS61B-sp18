@@ -14,8 +14,8 @@ import static org.junit.Assert.*;
 public class MapVisualTest {
 
     public static void main(String[] args) {
-        int WIDTH = 50;
-        int HEIGHT = 50;
+        int WIDTH = 80;
+        int HEIGHT = 60;
         long SEED = 12345;
         Random RANDOM = new Random();
 
