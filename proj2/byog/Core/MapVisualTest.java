@@ -15,8 +15,8 @@ public class MapVisualTest {
 
     public static void main(String[] args) {
         int WIDTH = 80;
-        int HEIGHT = 60;
-        long SEED = 12345;
+        int HEIGHT = 50;
+        long SEED = 2432423;
         Random RANDOM = new Random();
 
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
