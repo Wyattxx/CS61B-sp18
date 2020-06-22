@@ -222,6 +222,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         for (int i = 1; i <= size; i++) {
             if (getNode(i).myItem.equals(item)) {
                 getNode(i).myPriority = priority;
+                break;
             }
         }
     }
