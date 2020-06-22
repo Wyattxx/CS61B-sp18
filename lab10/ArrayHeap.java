@@ -161,7 +161,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         size += 1; //need to increase size first, due to following bound check
         contents[size] = new Node(item, priority);
         swim(size);
-
     }
 
     /**
@@ -221,7 +220,13 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     public void changePriority(T item, double priority) {
         for (int i = 1; i <= size; i++) {
             if (getNode(i).myItem.equals(item)) {
-                getNode(i).myPriority = priority;
+                if (getNode(i).myPriority < priority) {
+                    getNode(i).myPriority = priority;
+                    sink(i);
+                } else {
+                    getNode(i).myPriority = priority;
+                    swim(i);
+                }
                 break;
             }
         }
