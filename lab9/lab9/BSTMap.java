@@ -88,23 +88,24 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return p;
     }
 
-    private void putHelper2(K key, V value, Node p) {
-        //这里有问题，p是null，不返回node的话，这里指向新的node没用，p还是null，缺少一个sentinel
-        if (p == null) {
-            p.key = key;
-            p.value = value;
-            return;
-        }
-        int cmp = key.compareTo(p.key);
-        if (cmp < 0) {
-            putHelper2(key, value, p.left);
-        } else if (cmp > 0){
-            putHelper2(key, value, p.right);
-        } else {
-            p.value = value;
-            return;
-        }
-    }
+//    private void putHelper2(K key, V value, Node p) {
+//        //这里有问题，p是null，不返回node的话，这里指向新的node没用，p还是null，缺少一个sentinel
+//        //因为用到了递归，BST存在left和right，基础条件判断会比较麻烦
+//        if (p == null) {
+//            p.key = key;
+//            p.value = value;
+//            return;
+//        }
+//        int cmp = key.compareTo(p.key);
+//        if (cmp < 0) {
+//            putHelper2(key, value, p.left);
+//        } else if (cmp > 0){
+//            putHelper2(key, value, p.right);
+//        } else {
+//            p.value = value;
+//            return;
+//        }
+//    }
 
 
     /** Inserts the key KEY
@@ -115,8 +116,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (key == null) {
             throw new IllegalArgumentException("calls put() with a null key");
         }
-        //root = putHelper(key, value, root);
-        putHelper2(key, value, root);
+        root = putHelper(key, value, root);
 
 
     }
