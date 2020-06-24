@@ -1,4 +1,5 @@
 import java.util.Formatter;
+import java.util.List;
 
 /**
  * A naked recursive list of integers, similar to what we saw in lecture 3, but
@@ -103,6 +104,22 @@ public class IntList {
         }
         return new IntList(A.first, copy(A.rest));
     }
+
+//    public static IntList copy2(IntList A) {
+//        if (A == null) {
+//            return null;
+//        }
+//        IntList P = A;
+//        IntList B = new IntList(A.first, null);
+//        IntList P2 = B;
+//        while (P.rest != null) {
+//            B.rest = new IntList(P.rest.first, null);
+//            B = B.rest;
+//            P = P.rest;
+//        }
+//        return P2;
+//    }
+
     /**
      * Returns a list consisting of the elements of A followed by the
      * * elements of B.  May NOT modify items of A.  Use 'new'.
